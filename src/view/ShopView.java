@@ -27,9 +27,9 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-    private Shop shop; // Declaración de la variable shop como variable miembro
-    private boolean keyAlreadyPressed = false;
-	private ArrayList<Product>inventory;
+    private Shop shop; // Declaration of the variable shop as a member variable
+    private boolean keyAlreadyPressed = false; //boolean to check that it is pressed only once
+	private ArrayList<Product>inventory; //Attribute of the arraylist inventory of the products on class shop
 
 	/**
 	 * Launch the application.
@@ -54,7 +54,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 	 */
 	public ShopView() {
 		Shop shop = new Shop();
-		shop.loadInventory();
+		shop.loadInventory(); // Call method loadInventory();
 		this.shop = shop;
         this.addKeyListener(this);
         this.setFocusable(true); // Ensure that the window can receive keyboard events.
@@ -150,21 +150,28 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 
 
 	public void openCashView(){
+		//Method to open CashView passing object shop
 		CashView cashDialog = new CashView(shop);
+		//Show CashView
 		cashDialog.setVisible(true);
 		cashDialog.setTitle("CashView");
 
 	}
 	public void openProductView(int opcion, Shop shop) {
+		//Method to open ProductView passing objects option, shop
 	    ProductView productDialog = new ProductView(opcion, shop);
+		//Show ProductView
 		productDialog.setVisible(true);
 		
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		//ActionPerformed method for click-through menu operation
 		 String comando = e.getActionCommand();
+		 //Save in string variable the commands with their previously edited names
 	        switch (comando) {
+	       //Switch to call the corresponding method according to the command in the string
 	            case "Cash":
 	                openCashView();
 	                break;
@@ -193,9 +200,11 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
+    	//KeyPressed method for operating the menu with buttons
         int key = e.getKeyCode();
-
+        //Boolean to check that it is pressed only once
         if (!keyAlreadyPressed) {
+ 	       //Switch to call the corresponding method according to the command in the int.
 
         switch (key) {
             case KeyEvent.VK_1: // Opción 1: Contar caja

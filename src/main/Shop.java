@@ -132,11 +132,12 @@ public class Shop {
      * Load initial inventory to the shop with predefined product details.
      */
     
-    // Método público para obtener el valor de cash
+    // Public method to obtain the cash value
     public double getCash() {
         return cash;
     }
- // En la clase Shop
+ // In the Shop class
+ //Method to get inventory 
     public ArrayList<Product> getInventory() {
         return inventory;
     }

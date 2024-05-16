@@ -57,6 +57,8 @@ public class ProductView extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
+	
+	//Obtain the necessary parameters and initialise them
 	public ProductView(int opcion, Shop shop) {
 		
 		 this.opcion = opcion;
@@ -99,11 +101,13 @@ public class ProductView extends JDialog implements ActionListener {
        textField_2.setColumns(10);
        textField_2.setBounds(199, 100, 130, 26);
        getContentPane().add(textField_2);
+       //If opcion = 3 then hide textField_2 / lblPrecioProducto and set title "Añadir Stock"
        if(opcion == 3) {
     	   lblPrecioProducto.setVisible(false);
     	   textField_2.setVisible(false);	
     	   this.setTitle("Añadir Stock");
        }
+       //If opcion = 9 then hide textField_2 / lblPrecioProducto , textField_1 / lblStockProducto and set title "Eliminar Producto"
        if(opcion == 9) {
     	   lblPrecioProducto.setVisible(false);
     	   textField_2.setVisible(false);		
@@ -132,16 +136,16 @@ public class ProductView extends JDialog implements ActionListener {
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
 					    if (e.getActionCommand().equals("OK")) {
-					        if (opcion == 2) { // Opción para añadir un producto
+					        if (opcion == 2) { // Option to add a producto
 					        	
 
 					            String productName = textField.getText();
 					            int stock = Integer.parseInt(textField_1.getText());
 					            double price = Double.parseDouble(textField_2.getText());
-					            // Crear una nueva instancia de Amount para el precio
+					            // Create a new instance of Amount for the price
 					            Amount amount = new Amount(price);
 					            
-					            // Crear un product y comprobar si existe con findProduct
+					           // Create a product and check if it exists with findProduct
 					            Product productFind = shop.findProduct(productName);
 					            if (productFind == null) {
 
@@ -156,7 +160,7 @@ public class ProductView extends JDialog implements ActionListener {
 					            
 					            
 
-					        } else if (opcion == 3) { // Opción para añadir stock
+					        } else if (opcion == 3) { // Option to add stock
 					        	
 					        	String productName = textField.getText();
 					            int stock = Integer.parseInt(textField_1.getText());
@@ -174,7 +178,7 @@ public class ProductView extends JDialog implements ActionListener {
 					            }
 					        	
 					        	
-					        } else if (opcion == 9) { // Opción para eliminar un producto
+					        } else if (opcion == 9) { // Option to delete a product
 					        	
 					        	String productName = textField.getText();
 					        	// Find the product in the inventory
@@ -201,7 +205,7 @@ public class ProductView extends JDialog implements ActionListener {
 					        	
 					        }
 
-					        // Cerrar la ventana
+					        // Close the window
 					        dispose();
 					    }
 					}
@@ -216,6 +220,7 @@ public class ProductView extends JDialog implements ActionListener {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
+				        // Close the window
 				        dispose();
 
 					}
@@ -228,9 +233,10 @@ public class ProductView extends JDialog implements ActionListener {
 
 
 	// En la clase ProductView
-	public void setShop(Shop shop) {
+	//Set method to get inventory by the getInventory method
+	public void setShop(Shop shop){
 	    this.shop = shop;
-	    this.inventory = shop.getInventory(); // Obtener el inventario de la tienda
+	    this.inventory = shop.getInventory(); // Get shop inventory
 	}
 
 	@Override

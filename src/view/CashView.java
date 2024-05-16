@@ -27,7 +27,7 @@ public class CashView extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-	        Shop shop = new Shop(); // Crear una instancia de Shop
+	        Shop shop = new Shop(); // Create an instance of Shop
 			CashView dialog = new CashView(shop);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
@@ -43,7 +43,7 @@ public class CashView extends JDialog {
 	 * Create the dialog.
 	 */
 	public CashView(Shop shop) {
-	    this.shop = shop; // Guarda la instancia de Shop para usarla más tarde
+	    this.shop = shop; // Save the instance of Shop for later use.
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(201, 213, 242));
@@ -55,20 +55,20 @@ public class CashView extends JDialog {
 		contentPanel.add(lblNewLabel);
 		
 		textField = new JTextField();
-		textField.setEditable(false); // Establecemos el campo de texto como no editable
+		textField.setEditable(false); // We set the text field as non-editable.
 		textField.setBounds(182, 39, 130, 26);
 		contentPanel.add(textField);
 		textField.setColumns(10);
 		
-		 // Obtener el dinero en caja desde la clase Shop
-
+		 // Get the money in cash from the Shop class
         double cash = shop.getCash();
-		textField.setText(Double.toString(cash)); // Mostrar el dinero en el JTextField
+		textField.setText(Double.toString(cash)); // Show money in the JTextField
 
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			
 			{
 				JButton okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
