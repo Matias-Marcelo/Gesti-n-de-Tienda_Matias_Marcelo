@@ -1,0 +1,242 @@
+package view;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import main.Shop;
+import model.Amount;
+import model.Product;
+
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+public class ProductView extends JDialog implements ActionListener {
+
+	private static final long serialVersionUID = 1L;
+	private final JPanel contentPanel = new JPanel();
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private int opcion;
+	private Shop shop;
+	private ArrayList<Product> inventory;
+
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		try {
+		    
+			ProductView dialog = new ProductView(0, null);
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+			dialog.setTitle("ProductView");
+
+			
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+	}
+	
+
+	
+	/**
+	 * Create the dialog.
+	 */
+	public ProductView(int opcion, Shop shop) {
+		
+		 this.opcion = opcion;
+		 this.shop = shop;
+
+
+
+  	   
+  	   this.setTitle("Añadir Producto");
+       getContentPane().setBackground(new Color(201, 213, 242));
+       setForeground(new Color(0, 0, 0));
+       getContentPane().setForeground(new Color(201, 213, 242));
+       getContentPane().setLayout(null);
+       
+       JLabel lblNombreProducto = new JLabel("Nombre producto:");
+       lblNombreProducto.setBounds(62, 29, 130, 16);
+       getContentPane().add(lblNombreProducto);
+       
+       textField = new JTextField();
+       textField.setEditable(true);
+       textField.setColumns(10);
+       textField.setBounds(199, 24, 130, 26);
+       getContentPane().add(textField);
+       
+       JLabel lblStockProducto = new JLabel("Stock producto:");
+       lblStockProducto.setBounds(62, 65, 130, 16);
+       getContentPane().add(lblStockProducto);
+       
+       textField_1 = new JTextField();
+       textField_1.setEditable(true);
+       textField_1.setColumns(10);
+       textField_1.setBounds(199, 62, 130, 26);
+       getContentPane().add(textField_1);
+       
+       JLabel lblPrecioProducto = new JLabel("Precio producto:");
+       lblPrecioProducto.setBounds(62, 103, 130, 16);
+       getContentPane().add(lblPrecioProducto);
+       textField_2 = new JTextField();
+       textField_2.setEditable(true);
+       textField_2.setColumns(10);
+       textField_2.setBounds(199, 100, 130, 26);
+       getContentPane().add(textField_2);
+       if(opcion == 3) {
+    	   lblPrecioProducto.setVisible(false);
+    	   textField_2.setVisible(false);	
+    	   this.setTitle("Añadir Stock");
+       }
+       if(opcion == 9) {
+    	   lblPrecioProducto.setVisible(false);
+    	   textField_2.setVisible(false);		
+    	   lblStockProducto.setVisible(false);
+    	   textField_1.setVisible(false);
+    	   this.setTitle("Eliminar Producto");
+
+       }
+		setBounds(100, 100, 450, 300);
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setLayout(new FlowLayout());
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		{
+			JPanel buttonPane = new JPanel();
+			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			{
+				JButton okButton = new JButton("OK");
+				okButton.setActionCommand("OK");
+				buttonPane.add(okButton);
+				getRootPane().setDefaultButton(okButton);
+				okButton.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+					    if (e.getActionCommand().equals("OK")) {
+					        if (opcion == 2) { // Opción para añadir un producto
+					        	
+
+					            String productName = textField.getText();
+					            int stock = Integer.parseInt(textField_1.getText());
+					            double price = Double.parseDouble(textField_2.getText());
+					            // Crear una nueva instancia de Amount para el precio
+					            Amount amount = new Amount(price);
+					            
+					            // Crear un product y comprobar si existe con findProduct
+					            Product productFind = shop.findProduct(productName);
+					            if (productFind == null) {
+
+						            Product product = new Product(productName, amount, true, stock, new Amount(amount.getValue() * 2));
+						            shop.addProduct(product);			
+						            
+						            JOptionPane.showMessageDialog(null,"Producto añadido correctamente","Succes",JOptionPane.INFORMATION_MESSAGE);
+					            } else {
+						            JOptionPane.showMessageDialog(null,"Error, el producto ya existe","Error",JOptionPane.ERROR_MESSAGE);
+					            }
+
+					            
+					            
+
+					        } else if (opcion == 3) { // Opción para añadir stock
+					        	
+					        	String productName = textField.getText();
+					            int stock = Integer.parseInt(textField_1.getText());
+
+
+					            Product product = shop.findProduct(productName);
+					            if (product != null) {
+					                // Update the stock of the product
+					                int updatedStock = product.getStock() + stock;
+					                product.setStock(updatedStock);
+						            JOptionPane.showMessageDialog(null,"Se ha actualizado correctamente","Succes",JOptionPane.INFORMATION_MESSAGE);
+
+					            } else {
+						            JOptionPane.showMessageDialog(null,"Error, el producto no existe","Error",JOptionPane.ERROR_MESSAGE);
+					            }
+					        	
+					        	
+					        } else if (opcion == 9) { // Opción para eliminar un producto
+					        	
+					        	String productName = textField.getText();
+					        	// Find the product in the inventory
+					        	Product product = shop.findProduct(productName);
+					            // Check if the product exists and is available
+					            if (product != null && product.isAvailable()) {
+					                // Set its availability to false, effectively removing it from the inventory
+					            	boolean productAvaible = true;
+					            	inventory = shop.getInventory();
+					            	inventory.remove(product);
+					            	
+					            	 // If no more stock, set as not available to sale
+					                if (product.getStock() == 0) {
+					                    product.setAvailable(false);
+					                }
+						            JOptionPane.showMessageDialog(null,"Producto eliminado correctamente","Succes",JOptionPane.INFORMATION_MESSAGE);
+					            } else {
+						            JOptionPane.showMessageDialog(null,"Producto no encontrado","Error",JOptionPane.ERROR_MESSAGE);
+
+					            }
+
+					           
+					        	
+					        	
+					        }
+
+					        // Cerrar la ventana
+					        dispose();
+					    }
+					}
+					
+				});
+			}
+			{
+				JButton cancelButton = new JButton("Cancel");
+				cancelButton.setActionCommand("Cancel");
+				buttonPane.add(cancelButton);
+				cancelButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+				        dispose();
+
+					}
+					
+				});
+			}
+		}
+	}
+
+
+
+	// En la clase ProductView
+	public void setShop(Shop shop) {
+	    this.shop = shop;
+	    this.inventory = shop.getInventory(); // Obtener el inventario de la tienda
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+	
+		
+	}
+}
