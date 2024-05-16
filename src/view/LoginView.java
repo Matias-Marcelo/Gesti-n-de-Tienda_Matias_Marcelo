@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import exception.LimitLoginException;
 import model.Employee;
 
 import javax.swing.JTextField;
@@ -101,7 +102,9 @@ public class LoginView extends JFrame implements ActionListener {
 			 //Save the information of the field in variables
 			 int numEmpleado = Integer.parseInt(NúmeroEmpleado.getText());
 			 String password = Password.getText(); 
-	
+			 try {
+				 
+				 
 			 //Logic for login authentication with correct values 
 			 if(employee.login(numEmpleado, password)){
 				 //If is correct then set shopView visible = true
@@ -114,16 +117,23 @@ public class LoginView extends JFrame implements ActionListener {
 				 limpiarCampo();
 				 //Attribute contador to count the number of times incorrect values have been entered
 				 contador++;
-				 //If contador is greater than or equal to 3 then show JOptionPane of exception.
+				 //If contador is greater than or equal to 3 then throw new LimitLoginException(contador).
 				 if(contador >= 3) {
-					 
-					 JOptionPane.showMessageDialog(null, "Se ha alcanzado el número máximo intentos");
-					 dispose();
+					 throw new LimitLoginException(contador);
+					
 				 }else
 				 JOptionPane.showMessageDialog(null,"Usuario o password incorrectos");
-
 			 }
-		}});
+			 //Exception if contador is bigger than 3 times
+			 } catch(LimitLoginException ex) {
+				 //Show JOptionPane with message of class LimitLoginException, then close the window.
+				 JOptionPane.showMessageDialog(null,(ex.toString()), "Error", JOptionPane.ERROR_MESSAGE);
+				 dispose();
+		}
+			 
+		}
+			 
+	});
 		this.dispose();
 		contentPane.add(Acceder);
 		
