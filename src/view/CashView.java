@@ -62,7 +62,7 @@ public class CashView extends JDialog {
 		
 		 // Get the money in cash from the Shop class
         double cash = shop.getCash();
-		textField.setText(Double.toString(cash)); // Show money in the JTextField
+		textField.setText(Double.toString(cash)); // Show money in the JTextField.
 
 		{
 			JPanel buttonPane = new JPanel();

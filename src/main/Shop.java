@@ -137,7 +137,7 @@ public class Shop {
         return cash;
     }
  // In the Shop class
- //Method to get inventory 
+ //Method to get inventory .
     public ArrayList<Product> getInventory() {
         return inventory;
     }

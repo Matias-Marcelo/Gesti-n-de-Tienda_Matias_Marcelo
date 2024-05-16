@@ -200,7 +200,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-    	//KeyPressed method for operating the menu with buttons
+    	//KeyPressed method for operating the menu with buttons.
         int key = e.getKeyCode();
         //Boolean to check that it is pressed only once
         if (!keyAlreadyPressed) {

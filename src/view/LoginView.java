@@ -28,7 +28,7 @@ public class LoginView extends JFrame implements ActionListener {
 	private JTextField NúmeroEmpleado;
 	private JPasswordField Password;
 	private int contador = 0;
-	//Attributes required for fields and exemption
+	//Attributes required for fields and exception
 	/**
 	 * Launch the application.
 	 */
@@ -114,7 +114,7 @@ public class LoginView extends JFrame implements ActionListener {
 				 limpiarCampo();
 				 //Attribute contador to count the number of times incorrect values have been entered
 				 contador++;
-				 //If contador is greater than or equal to 3 then show JOptionPane of exception
+				 //If contador is greater than or equal to 3 then show JOptionPane of exception.
 				 if(contador >= 3) {
 					 
 					 JOptionPane.showMessageDialog(null, "Se ha alcanzado el número máximo intentos");
