@@ -233,7 +233,7 @@ public class ProductView extends JDialog implements ActionListener {
 
 
 	// En la clase ProductView
-	//Set method to get inventory by the getInventory method.
+	//Set method to get inventory by the getInventory method
 	public void setShop(Shop shop){
 	    this.shop = shop;
 	    this.inventory = shop.getInventory(); // Get shop inventory
