@@ -13,10 +13,13 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.HeadlessException;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
@@ -129,7 +132,15 @@ public class LoginView extends JFrame implements ActionListener {
 				 //Show JOptionPane with message of class LimitLoginException, then close the window.
 				 JOptionPane.showMessageDialog(null,(ex.toString()), "Error", JOptionPane.ERROR_MESSAGE);
 				 dispose();
-		}
+		} catch (HeadlessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				System.out.println(e1.getMessage());
+				e1.getMessage();
+				e1.printStackTrace();
+			}
 			 
 		}
 			 

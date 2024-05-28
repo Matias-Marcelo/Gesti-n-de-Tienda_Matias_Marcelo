@@ -16,9 +16,9 @@ public class DaoImplJDBC implements Dao{
 	public void connect() throws SQLException {
 		// TODO Auto-generated method stub
 		// Define connection parameters
-		String url = "jdbc:mysql://localhost:8889/COMPANY";
+		String url = "jdbc:mysql://localhost:8889/shop";
 		String user = "root";
-		String pass = "password";
+		String pass = "root";
 		//this.connection = DriverManager.getConnection(url, user, pass);
 		this.connection = DriverManager.getConnection(url, user, pass);
 
@@ -29,14 +29,15 @@ public class DaoImplJDBC implements Dao{
 		// TODO Auto-generated method stub
 		Employee employee = null;
 		// prepare query
-		String query = "select * from employee where id = ? ";
+		String query = "select * from employee where employeeId = ? and password = ?";
 		try(PreparedStatement ps = connection.prepareStatement(query)){
 			// set id to search for
 			ps.setInt(1,employeeId);
+			ps.setString(2, password);
 		  	//System.out.println(ps.toString());
 			try (ResultSet rs = ps.executeQuery()) {
 	        	if (rs.next()) {
-	        		employee =  new Employee();            		            				
+	        		employee = new Employee(rs.getInt(1),rs.getString(2));            		            				
 	        	}
 	        }
 

@@ -17,6 +17,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.io.IOException;  // Import the IOException class to handle errors
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.io.FileWriter;
 
@@ -46,7 +47,7 @@ public class Shop {
     }
     
     // Main method where the program execution begins
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException {
         // Create an instance of the Shop class
     	
 
@@ -141,7 +142,7 @@ public class Shop {
     public ArrayList<Product> getInventory() {
         return inventory;
     }
-    public void initSession() {
+    public void initSession() throws SQLException {
         Employee employee = new Employee(); //Create object employee of class employee
         int numero;
         String password;
