@@ -20,6 +20,7 @@ public class DaoImplJDBC implements Dao{
 		String user = "root";
 		String pass = "root";
 		//this.connection = DriverManager.getConnection(url, user, pass);
+        // Establish a connection to the database
 		this.connection = DriverManager.getConnection(url, user, pass);
 
 	}
@@ -28,14 +29,15 @@ public class DaoImplJDBC implements Dao{
 	public Employee getEmployee(int employeeId, String password) {
 		// TODO Auto-generated method stub
 		Employee employee = null;
-		// prepare query
+        // Prepare the SQL query
 		String query = "select * from employee where employeeId = ? and password = ?";
 		try(PreparedStatement ps = connection.prepareStatement(query)){
-			// set id to search for
+            // Set parameters for the query
 			ps.setInt(1,employeeId);
 			ps.setString(2, password);
-		  	//System.out.println(ps.toString());
+            // Execute the query and get the result set
 			try (ResultSet rs = ps.executeQuery()) {
+                // If a matching employee is found, create an Employee object
 	        	if (rs.next()) {
 	        		employee = new Employee(rs.getInt(1),rs.getString(2));            		            				
 	        	}
@@ -51,6 +53,7 @@ public class DaoImplJDBC implements Dao{
 	@Override
 	public void disconnect() throws SQLException {
 		// TODO Auto-generated method stub
+        // Close the database connection if it is not null
 		if (connection != null) {
 			connection.close();
 		}

@@ -18,12 +18,12 @@ public class Employee extends Person implements Logable {
 
 	// Constructor
 	public Employee() {
-		// Asignar un objeto DaoImplJDBC al atributo dao
+        // Assign a DaoImplJDBC object to the dao attribute
 		this.dao = new DaoImplJDBC();
 	}
 
 	public Employee(int employeeId, String password) {
-		// TODO Auto-generated constructor stub
+        // Constructor to initialize employeeId and password
 		this.employeeId = employeeId;
 		this.password = password;
 
@@ -31,13 +31,14 @@ public class Employee extends Person implements Logable {
 
 	@Override
 	public boolean login(int user, String password) throws SQLException {
-		// TODO Auto-generated method stub
+        // Implement method login
 		dao = new DaoImplJDBC();
 		Employee employee = null;
 		try {
 			System.out.println("Estableciendo conexión con la base de datos...");
 			dao.connect();
 			System.out.println("Conectado.");
+            // Retrieve employee from the database
 
 			employee = dao.getEmployee(user, password);
 			if (dao.getEmployee(user, password) != null) {
@@ -46,8 +47,10 @@ public class Employee extends Person implements Logable {
 
 			}
 		} catch (SQLException ex) {
+            // Handle SQL exception
 			System.out.println("ERROR con la BBDD: " + ex.getMessage());
 		} finally {
+            // Disconnect from the database
 			System.out.println("Desconectando....");
 			try {
 				dao.disconnect();
@@ -66,7 +69,7 @@ public class Employee extends Person implements Logable {
 		// }
 
 	}
-
+    // Getter and setter for employeeId
 	public int getEmployeeId() {
 		return employeeId;
 	}
@@ -74,7 +77,7 @@ public class Employee extends Person implements Logable {
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
 	}
-
+    // Getter and setter for password
 	public String getPassword() {
 		return password;
 	}
@@ -82,7 +85,7 @@ public class Employee extends Person implements Logable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+    // Getter and setter for name
 	public String getName() {
 		return name;
 	}
