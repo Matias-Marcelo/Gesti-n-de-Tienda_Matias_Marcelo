@@ -21,6 +21,7 @@ import javax.swing.JTextPane;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 
 public class ShopView extends JFrame implements ActionListener, KeyListener{
@@ -72,7 +73,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		
 		JButton btnNewButton = new JButton("1. Contar caja");
 
-		btnNewButton.setBounds(280, 83, 147, 48);
+		btnNewButton.setBounds(280, 123, 147, 48);
 		btnNewButton.addActionListener(this);
 		btnNewButton.setActionCommand("Cash");
 		btnNewButton.addActionListener(new ActionListener(){
@@ -91,7 +92,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("2. AÃ±adir producto");
-		btnNewButton_1.setBounds(280, 160, 147, 48);
+		btnNewButton_1.setBounds(280, 181, 147, 48);
 		btnNewButton_1.setActionCommand("");
 		btnNewButton_1.addActionListener(this);
 		btnNewButton_1.setActionCommand("AddProduct");
@@ -102,7 +103,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		contentPane.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("3. AÃ±adir stock");
-		btnNewButton_2.setBounds(280, 244, 147, 48);
+		btnNewButton_2.setBounds(280, 239, 147, 48);
 		btnNewButton_2.addActionListener(this);
 		btnNewButton_2.setActionCommand("AddStock");
 		btnNewButton_2.addActionListener(new ActionListener() {
@@ -119,7 +120,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		contentPane.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("9. Eliminar producto");
-		btnNewButton_3.setBounds(280, 332, 147, 41);
+		btnNewButton_3.setBounds(280, 297, 147, 41);
 		btnNewButton_3.addActionListener(this);
 		btnNewButton_3.setActionCommand("DeleteProduct");
 		btnNewButton_3.addActionListener(new ActionListener() {
@@ -144,9 +145,27 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		lblNewLabel.setIcon(new ImageIcon("/Users/manana/Downloads/cestafinal.png"));
 		lblNewLabel.setBounds(503, 102, 262, 230);
 		contentPane.add(lblNewLabel);
-		this.addKeyListener(this);
 		
-	}
+		JButton btnNewButton_4 = new JButton("0. Exportar inventario");
+		btnNewButton_4.setActionCommand("ExportInventory");
+		btnNewButton_4.setBounds(280, 65, 147, 48);
+		btnNewButton_4.addActionListener(this);
+		contentPane.add(btnNewButton_4);
+		this.addKeyListener(this);
+
+		btnNewButton_4.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});		
+		}
+		
+		
+	
 
 
 	public void openCashView(){
@@ -157,6 +176,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		cashDialog.setTitle("CashView");
 
 	}
+
 	public void openProductView(int opcion, Shop shop) {
 		//Method to open ProductView passing objects option, shop
 	    ProductView productDialog = new ProductView(opcion, shop);
@@ -187,6 +207,19 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 	                setTitle("Eliminar Producto");
 	                openProductView(9,shop);
 	                break;
+	                
+	            case "ExportInventory":
+	            	setTitle("Exportar Producto");
+	                if (shop.writeInventory()) {
+	                    // Si la exportación fue exitosa, muestra una ventana con mensaje de éxito
+	                    JOptionPane.showMessageDialog(this, "Inventario exportado correctamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
+	                } else {
+	                    // Si hubo un error, muestra una ventana con un mensaje de error
+	                    JOptionPane.showMessageDialog(this, "Error exportando el inventario.", "Error", JOptionPane.ERROR_MESSAGE);
+	                }
+	
+	            	
+	            	
 	        }	
 	}
 		

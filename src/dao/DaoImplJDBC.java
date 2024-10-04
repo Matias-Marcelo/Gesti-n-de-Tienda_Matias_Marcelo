@@ -5,23 +5,30 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import model.Employee;
+import model.Product;
 
 public class DaoImplJDBC implements Dao{
 
 	private Connection connection;
 
 	@Override
-	public void connect() throws SQLException {
+	public void connect() {
 		// TODO Auto-generated method stub
 		// Define connection parameters
-		String url = "jdbc:mysql://localhost:8889/shop";
+		String url = "jdbc:mysql://localhost:3306/shop";
 		String user = "root";
 		String pass = "root";
 		//this.connection = DriverManager.getConnection(url, user, pass);
         // Establish a connection to the database
-		this.connection = DriverManager.getConnection(url, user, pass);
+		try {
+			
+			this.connection = DriverManager.getConnection(url, user, pass);
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
 
 	}
 
@@ -51,12 +58,31 @@ public class DaoImplJDBC implements Dao{
 	}
 
 	@Override
-	public void disconnect() throws SQLException {
+	public void disconnect() {
 		// TODO Auto-generated method stub
         // Close the database connection if it is not null
+		
 		if (connection != null) {
-			connection.close();
+			try {
+				connection.close();
+				
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
 		}
+	}
+
+	@Override
+	public ArrayList<Product> getInventory(){
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean writeInventory(ArrayList<Product> Inventory){
+		// TODO Auto-generated method stub
+		return false	;
 	}
 
 }

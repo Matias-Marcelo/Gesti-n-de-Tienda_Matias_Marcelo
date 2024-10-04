@@ -18,12 +18,12 @@ public class Employee extends Person implements Logable {
 
 	// Constructor
 	public Employee() {
-        // Assign a DaoImplJDBC object to the dao attribute
+		// Assign a DaoImplJDBC object to the dao attribute
 		this.dao = new DaoImplJDBC();
 	}
 
 	public Employee(int employeeId, String password) {
-        // Constructor to initialize employeeId and password
+		// Constructor to initialize employeeId and password
 		this.employeeId = employeeId;
 		this.password = password;
 
@@ -31,34 +31,28 @@ public class Employee extends Person implements Logable {
 
 	@Override
 	public boolean login(int user, String password) throws SQLException {
-        // Implement method login
+		// Implement method login
 		dao = new DaoImplJDBC();
 		Employee employee = null;
-		try {
-			System.out.println("Estableciendo conexión con la base de datos...");
-			dao.connect();
-			System.out.println("Conectado.");
-            // Retrieve employee from the database
+		boolean success = false;
 
-			employee = dao.getEmployee(user, password);
-			if (dao.getEmployee(user, password) != null) {
+		System.out.println("Estableciendo conexión con la base de datos...");
+		dao.connect();
+		System.out.println("Conectado.");
+		// Retrieve employee from the database
 
-				return true;
+		employee = dao.getEmployee(user, password);
+		if (dao.getEmployee(user, password) != null) {
 
-			}
-		} catch (SQLException ex) {
-            // Handle SQL exception
-			System.out.println("ERROR con la BBDD: " + ex.getMessage());
-		} finally {
-            // Disconnect from the database
-			System.out.println("Desconectando....");
-			try {
-				dao.disconnect();
-			} catch (SQLException ex) {
-				System.out.println("Error al desconectar " + ex.getMessage());
-			}
+			return true;
+
 		}
-		return false;
+
+		// Disconnect from the database
+		System.out.println("Desconectando....");
+		dao.disconnect();
+
+		return success;
 
 		// if(user == 123 && password.equalsIgnoreCase("test")) {
 
@@ -69,7 +63,8 @@ public class Employee extends Person implements Logable {
 		// }
 
 	}
-    // Getter and setter for employeeId
+
+	// Getter and setter for employeeId
 	public int getEmployeeId() {
 		return employeeId;
 	}
@@ -77,7 +72,8 @@ public class Employee extends Person implements Logable {
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
 	}
-    // Getter and setter for password
+
+	// Getter and setter for password
 	public String getPassword() {
 		return password;
 	}
@@ -85,7 +81,8 @@ public class Employee extends Person implements Logable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-    // Getter and setter for name
+
+	// Getter and setter for name
 	public String getName() {
 		return name;
 	}

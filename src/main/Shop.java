@@ -6,6 +6,8 @@ import model.Employee;
 import model.Product;
 import model.Sale;
 import view.ProductView;
+import dao.Dao;
+import dao.DaoImplFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,26 +33,28 @@ public class Shop {
     private int numberProducts;
     private ArrayList<Sale>sales;
     //private Sale[] sales;
-    int salesIndex = 0;
+    int salesIndex = 0; 
 
+	private Dao dao;
     // Constant representing the tax rate
     final static double TAX_RATE = 1.04;
     
-
+   
     // Constructor initializes the shop with an initial cash amount, inventory, and sales array
     public Shop() {
         cash = 100.0;
     //    sales = new Sale[10];
         sales = new ArrayList<Sale>();
         this.inventory = new ArrayList<Product>();
+        this.dao = new DaoImplFile();
          
     }
     
-    // Main method where the program execution begins
+   
+
+	// Main method where the program execution begins
     public static void main(String[] args) throws IOException, SQLException {
         // Create an instance of the Shop class
-    	
-
     	
         Shop shop = new Shop();
 
@@ -142,6 +146,9 @@ public class Shop {
     public ArrayList<Product> getInventory() {
         return inventory;
     }
+	    
+	 
+	    
     public void initSession() throws SQLException {
         Employee employee = new Employee(); //Create object employee of class employee
         int numero;
@@ -165,49 +172,59 @@ public class Shop {
     
     public void loadInventory() {
     	
-    	try {
-  	      File files = new File("files/inputinventory.txt"); // File object to read from inputinventory.txt file
-  	      Scanner scanner = new Scanner(files); // Scanner object to read from the file
-  	      while (scanner.hasNextLine()) {
-  	        String data = scanner.nextLine(); // Read a line from the file
-  	        String[] line1 = data.split(";"); // Split the line based on semicolon
-  	        String nombre = "";
-  	        double wholesalerPrice = 0.0;
-  	        int stock = 0;
-  	        double publicPrice = 0.0;
-  	        //System.out.println(line1);
-  	        for (int i = 0; i < line1.length; i++) {
-  	        	String[] line2 = line1[i].split(":"); // Split each part of the line based on colon
 
-  	        	switch(i) {
-  	        	case 0:
-      	        	nombre = line2[1]; // Assign name from the split line
-      	        	break;
-  	        	case 1:
-      	        	wholesalerPrice = Double.parseDouble(line2[1]); // Assign wholesaler price from the split line
-      	        	break;
-  	        	case 2:
-      	        	stock = Integer.parseInt(line2[1]); // Assign stock from the split line
-      	        	break;
-      	        		
-  	        	}
-				}
-  	        Amount amount = new Amount(wholesalerPrice);
-  	        addProduct(new Product(nombre, amount, true, stock, new Amount(amount.getValue() * 2))); // Add product to inventory
-
-  	      }
-  	      scanner.close(); // Close the scanner
-  	    } catch (FileNotFoundException e) { // Catch FileNotFoundException
-  	      System.out.println("An error occurred."); // Print error message
-  	      e.printStackTrace(); // Print stack trace
-  	    }
-    	
-//        addProduct(new Product("Manzana", 10.00, true, 10, 20.00));
-//        addProduct(new Product("Pera", 20.00, true, 20, 40.00));
-//        addProduct(new Product("Hamburguesa", 30.00, true, 30, 60.00));
-//        addProduct(new Product("Fresa", 5.00, true, 20, 10.00));
+    	this.inventory = dao.getInventory();
+//    	try {
+//  	      File files = new File("files/inputinventory.txt"); // File object to read from inputinventory.txt file
+//  	      Scanner scanner = new Scanner(files); // Scanner object to read from the file
+//  	      while (scanner.hasNextLine()) {
+//  	        String data = scanner.nextLine(); // Read a line from the file
+//  	        String[] line1 = data.split(";"); // Split the line based on semicolon
+//  	        String nombre = "";
+//  	        double wholesalerPrice = 0.0;
+//  	        int stock = 0;
+//  	        double publicPrice = 0.0;
+//  	        //System.out.println(line1);
+//  	        for (int i = 0; i < line1.length; i++) {
+//  	        	String[] line2 = line1[i].split(":"); // Split each part of the line based on colon
+//
+//  	        	switch(i) {
+//  	        	case 0:
+//      	        	nombre = line2[1]; // Assign name from the split line
+//      	        	break;
+//  	        	case 1:
+//      	        	wholesalerPrice = Double.parseDouble(line2[1]); // Assign wholesaler price from the split line
+//      	        	break;
+//  	        	case 2:
+//      	        	stock = Integer.parseInt(line2[1]); // Assign stock from the split line
+//      	        	break;
+//      	        		
+//  	        	}
+//				}
+//  	        Amount amount = new Amount(wholesalerPrice);
+//  	        addProduct(new Product(nombre, amount, true, stock, new Amount(amount.getValue() * 2))); // Add product to inventory
+//
+//  	      }
+//  	      scanner.close(); // Close the scanner
+//  	    } catch (FileNotFoundException e) { // Catch FileNotFoundException
+//  	      System.out.println("An error occurred."); // Print error message
+//  	      e.printStackTrace(); // Print stack trace
+//  	    }
+//    	
+////        addProduct(new Product("Manzana", 10.00, true, 10, 20.00));
+////        addProduct(new Product("Pera", 20.00, true, 20, 40.00));
+////        addProduct(new Product("Hamburguesa", 30.00, true, 30, 60.00));
+////        addProduct(new Product("Fresa", 5.00, true, 20, 10.00));
     
-    }											
+    }			
+    
+    public boolean writeInventory() {
+    	
+    	
+    	
+		return dao.writeInventory(this.inventory);
+    	
+    };
 
     /**
      * Display the current total cash of the shop.
