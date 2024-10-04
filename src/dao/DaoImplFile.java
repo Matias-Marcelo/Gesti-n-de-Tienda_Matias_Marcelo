@@ -126,7 +126,8 @@ public class DaoImplFile implements Dao {
 				counterProducts++;
 
 			}
-			StringBuilder secondLine = new StringBuilder("Número total de productos: " + counterProducts+";");
+
+			StringBuilder secondLine = new StringBuilder("Número total de productos: " + (counterProducts-1)+";");
 
 			print.write(secondLine.toString());
 			print.write("\n");

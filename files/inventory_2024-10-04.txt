@@ -11,4 +11,4 @@
 11;Product:Uva;Stock:9;
 12;Product:Melon;Stock:8;
 13;Product:Rabano;Stock:9;
-Número total de productos: 14;
+Número total de productos: 13;
