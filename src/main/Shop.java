@@ -8,12 +8,20 @@ import model.Sale;
 import view.ProductView;
 import dao.Dao;
 import dao.DaoImplFile;
+import dao.xml.SaxReader;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Scanner;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.SAXException;
+
 import java.time.format.DateTimeFormatter ;
 import java.io.File;
 import java.util.ArrayList;
@@ -61,6 +69,9 @@ public class Shop {
         // Load initial inventory to the shop
         shop.loadInventory();
 
+
+		
+		
         // Set up a simple console menu for user interaction
         Scanner scanner = new Scanner(System.in);
         int option = 0;
@@ -171,9 +182,22 @@ public class Shop {
     }
     
     public void loadInventory() {
-    	
-
-    	this.inventory = dao.getInventory();
+        //Read an xml file
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+		SAXParser parser;
+    	try {
+			parser = factory.newSAXParser();
+			File file = new File("files/inputInventory.xml");
+			SaxReader saxReader = new SaxReader();
+			parser.parse(file, saxReader);
+			this.inventory = saxReader.getProducts();
+			
+		} catch (ParserConfigurationException | SAXException e) {
+			System.out.println("ERROR creating the parser");
+		} catch (IOException e) {
+			System.out.println("ERROR file not found");
+		}
+    	//this.inventory = dao.getInventory();
 //    	try {
 //  	      File files = new File("files/inputinventory.txt"); // File object to read from inputinventory.txt file
 //  	      Scanner scanner = new Scanner(files); // Scanner object to read from the file

@@ -25,8 +25,22 @@ public class Product {
         this.publicPrice = publicPrice;
         totalProducts++;
     }
+    
+    
+    //Constructor to initialize a Product object with name, wholesalerPrice and stock
+    //Made for read xml
+    public Product(String name, Amount wholesalerPrice, int stock) {
+		super();
+        this.id = totalProducts + 1;
+		this.name = name;
+		this.wholesalerPrice = wholesalerPrice;
+		this.stock = stock;
+        totalProducts++;
+	}
 
-    // Getter for the id property
+
+
+	// Getter for the id property
     public int getId() {
         return id;
     }
