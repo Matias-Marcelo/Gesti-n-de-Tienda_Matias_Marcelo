@@ -9,6 +9,8 @@ import view.ProductView;
 import dao.Dao;
 import dao.DaoImplFile;
 import dao.xml.SaxReader;
+import dao.DaoImplXml;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -42,7 +44,6 @@ public class Shop {
     private ArrayList<Sale>sales;
     //private Sale[] sales;
     int salesIndex = 0; 
-
 	private Dao dao;
     // Constant representing the tax rate
     final static double TAX_RATE = 1.04;
@@ -54,7 +55,8 @@ public class Shop {
     //    sales = new Sale[10];
         sales = new ArrayList<Sale>();
         this.inventory = new ArrayList<Product>();
-        this.dao = new DaoImplFile();
+        this.dao = new DaoImplXml();
+
          
     }
     
@@ -182,22 +184,8 @@ public class Shop {
     }
     
     public void loadInventory() {
-        //Read an xml file
-		SAXParserFactory factory = SAXParserFactory.newInstance();
-		SAXParser parser;
-    	try {
-			parser = factory.newSAXParser();
-			File file = new File("files/inputInventory.xml");
-			SaxReader saxReader = new SaxReader();
-			parser.parse(file, saxReader);
-			this.inventory = saxReader.getProducts();
-			
-		} catch (ParserConfigurationException | SAXException e) {
-			System.out.println("ERROR creating the parser");
-		} catch (IOException e) {
-			System.out.println("ERROR file not found");
-		}
-    	//this.inventory = dao.getInventory();
+ 
+    	this.inventory = dao.getInventory();
 //    	try {
 //  	      File files = new File("files/inputinventory.txt"); // File object to read from inputinventory.txt file
 //  	      Scanner scanner = new Scanner(files); // Scanner object to read from the file
@@ -244,9 +232,8 @@ public class Shop {
     
     public boolean writeInventory() {
     	
+    	return dao.writeInventory(this.inventory);
     	
-    	
-		return dao.writeInventory(this.inventory);
     	
     };
 

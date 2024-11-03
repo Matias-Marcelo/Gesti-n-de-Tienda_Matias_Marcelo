@@ -37,7 +37,7 @@ public class SaxReader extends DefaultHandler{
 		// TODO Auto-generated method stub
 		switch (qName) {
 		case "product":
-            this.product = new Product("", null, 0); // Crea un objeto vacío; estableceremos los valores con setters después
+            this.product = new Product("", null, false, 0, null); // Crea un objeto vac�o; estableceremos los valores con setters después
 			this.product.setName(attributes.getValue("name")!= null ? attributes.getValue("name") : "empty");
             break;
 		case "wholesalerPrice":
@@ -62,8 +62,13 @@ public class SaxReader extends DefaultHandler{
 			
 			double priceValue = Double.valueOf(value); // Convertir el valor a double
 	        Amount wholesalerAmount = new Amount(priceValue); // Crear una instancia de Amount
-	        wholesalerAmount.setCurrency(currency); // Establecer la moneda
+	   
 	        product.setWholesalerPrice(wholesalerAmount); // Asignar a product
+	        Amount publicAmount = new Amount(wholesalerAmount.getValue() * 2);
+	    
+	        product.setPublicPrice(publicAmount);
+	        
+	        product.setAvailable(true);
 			
 		} else if (qName.equals("stock")) {
 	        this.product.setStock(Integer.valueOf(value)); // Asignar stock
