@@ -1,13 +1,20 @@
 // The Product class represents a product in the store
 package model;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
 // Product class with properties id, name, publicPrice, wholesalerPrice, available, stock, and totalProducts
+@XmlRootElement(name = "product") // Indica que esta clase será el nodo raíz en el XML
+@XmlType(propOrder = { "available", "wholesalerPrice", "publicPrice", "stock"})
 public class Product {
     private int id;
     private String name;
     private Amount publicPrice;
     private Amount wholesalerPrice;
-    private boolean available;
+    private boolean available = true ;
     private int stock;
     private static int totalProducts;
 
@@ -26,12 +33,15 @@ public class Product {
         totalProducts++;
     }
     
-    
- 
+    public Product() {
+    	super();
+    	this.id = ++totalProducts;
+    }
 
 
 
 	// Getter for the id property
+    @XmlAttribute(name="id")
     public int getId() {
         return id;
     }
@@ -42,6 +52,7 @@ public class Product {
     }
 
     // Getter for the name property
+	@XmlAttribute(name="name")
     public String getName() {
         return name;
     }
@@ -52,6 +63,7 @@ public class Product {
     }
 
     // Getter for the publicPrice property
+    @XmlElement(name="publicPrice")
     public Amount getPublicPrice() {
         return publicPrice;
     }
@@ -62,6 +74,7 @@ public class Product {
     }
 
     // Getter for the wholesalerPrice property
+    @XmlElement(name = "wholesalerPrice")
     public Amount getWholesalerPrice() {
         return wholesalerPrice;
     }
@@ -69,9 +82,11 @@ public class Product {
     // Setter for the wholesalerPrice property
     public void setWholesalerPrice(Amount wholesalerPrice) {
         this.wholesalerPrice = wholesalerPrice;
+        this.publicPrice = new  Amount(wholesalerPrice.getValue() * 2);
     }
 
     // Getter for the available property
+    @XmlElement(name="available")
     public boolean isAvailable() {
         return available;
     }
@@ -82,6 +97,7 @@ public class Product {
     }
 
     // Getter for the stock property
+    @XmlElement(name = "stock")
     public int getStock() {
         return stock;
     }

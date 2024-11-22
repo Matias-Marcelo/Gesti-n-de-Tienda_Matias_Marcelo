@@ -8,6 +8,7 @@ import model.Sale;
 import view.ProductView;
 import dao.Dao;
 import dao.DaoImplFile;
+import dao.DaoImplJaxb;
 import dao.xml.SaxReader;
 import dao.DaoImplXml;
 
@@ -55,7 +56,7 @@ public class Shop {
     //    sales = new Sale[10];
         sales = new ArrayList<Sale>();
         this.inventory = new ArrayList<Product>();
-        this.dao = new DaoImplXml();
+        this.dao = new DaoImplJaxb();
 
          
     }
