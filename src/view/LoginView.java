@@ -76,7 +76,7 @@ public class LoginView extends JFrame implements ActionListener {
 		Password = new JPasswordField();
 		Password.setBounds(302, 228, 244, 26);
 		contentPane.add(Password);
-		Password.setColumns(10);
+		Password.setColumns(10); 	
 		
 		NúmeroEmpleado = new JTextField();
 		NúmeroEmpleado.addActionListener(new ActionListener() {
@@ -124,7 +124,7 @@ public class LoginView extends JFrame implements ActionListener {
 				 if(contador >= 3) {
 					 throw new LimitLoginException(contador);
 					
-				 }else
+				 }else    
 				 JOptionPane.showMessageDialog(null,"Usuario o password incorrectos");
 			 }
 			 //Exception if contador is bigger than 3 times

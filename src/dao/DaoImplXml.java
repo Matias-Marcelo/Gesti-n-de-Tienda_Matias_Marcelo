@@ -67,7 +67,31 @@ public class DaoImplXml implements Dao{
 		// TODO Auto-generated method stub
 	    DomWriter domWritter = new DomWriter();
 	    
-	    return domWritter.writeToXML(inventory); // Asegúrate de que este método se llame
+	    return domWritter.writeToXML(inventory); 
+	}
+
+
+
+	@Override
+	public void addProduct(Product product) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void updateProduct(Product product) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void deleteProduct(int productId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

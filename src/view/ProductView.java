@@ -11,6 +11,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import dao.Dao;
+import dao.DaoImplJDBC;
 import main.Shop;
 import model.Amount;
 import model.Product;
@@ -30,6 +32,7 @@ public class ProductView extends JDialog implements ActionListener {
 	private int opcion;
 	private Shop shop;
 	private ArrayList<Product> inventory;
+	private Dao dao;
 
 
 	/**
@@ -63,6 +66,7 @@ public class ProductView extends JDialog implements ActionListener {
 		
 		 this.opcion = opcion;
 		 this.shop = shop;
+		 this.dao = new DaoImplJDBC();
 
 
 
@@ -137,6 +141,7 @@ public class ProductView extends JDialog implements ActionListener {
 						// TODO Auto-generated method stub
 					    if (e.getActionCommand().equals("OK")) {
 					        if (opcion == 2) { // Option to add a producto
+					        	dao = new DaoImplJDBC();
 					        	
 
 					            String productName = textField.getText();
@@ -150,6 +155,7 @@ public class ProductView extends JDialog implements ActionListener {
 					            if (productFind == null) {
 
 						            Product product = new Product(productName, amount, true, stock, new Amount(amount.getValue() * 2));
+						            //dao.addProduct(product);
 						            shop.addProduct(product);			
 						            
 						            JOptionPane.showMessageDialog(null,"Producto añadido correctamente","Succes",JOptionPane.INFORMATION_MESSAGE);
@@ -167,10 +173,12 @@ public class ProductView extends JDialog implements ActionListener {
 
 
 					            Product product = shop.findProduct(productName);
+					           
 					            if (product != null) {
 					                // Update the stock of the product
-					                int updatedStock = product.getStock() + stock;
-					                product.setStock(updatedStock);
+					                //int updatedStock = product.getStock() + stock;
+					                //product.setStock(updatedStock);
+					            	 shop.addStock(product, stock);
 						            JOptionPane.showMessageDialog(null,"Se ha actualizado correctamente","Succes",JOptionPane.INFORMATION_MESSAGE);
 
 					            } else {
@@ -183,17 +191,18 @@ public class ProductView extends JDialog implements ActionListener {
 					        	String productName = textField.getText();
 					        	// Find the product in the inventory
 					        	Product product = shop.findProduct(productName);
-					            // Check if the product exists and is available
+					        	int productId = product.getId();
+					        			// Check if the product exists and is available
 					            if (product != null && product.isAvailable()) {
 					                // Set its availability to false, effectively removing it from the inventory
-					            	boolean productAvaible = true;
-					            	inventory = shop.getInventory();
-					            	inventory.remove(product);
-					            	
+					            	//boolean productAvaible = true;
+					            	//inventory = shop.getInventory();
+					            	//inventory.remove(product);
+					            	shop.deleteProduct(product,productId);
 					            	 // If no more stock, set as not available to sale
-					                if (product.getStock() == 0) {
-					                    product.setAvailable(false);
-					                }
+					               // if (product.getStock() == 0) {
+					                   // product.setAvailable(false);
+					               // }
 						            JOptionPane.showMessageDialog(null,"Producto eliminado correctamente","Succes",JOptionPane.INFORMATION_MESSAGE);
 					            } else {
 						            JOptionPane.showMessageDialog(null,"Producto no encontrado","Error",JOptionPane.ERROR_MESSAGE);

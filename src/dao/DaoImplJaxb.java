@@ -56,4 +56,22 @@ public class DaoImplJaxb implements Dao{
 		return marshal.marshalXml(inventory);
 	}
 
+	@Override
+	public void addProduct(Product product) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateProduct(Product product) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteProduct(int productId) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

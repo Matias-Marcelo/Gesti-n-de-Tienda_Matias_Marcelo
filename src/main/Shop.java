@@ -8,6 +8,7 @@ import model.Sale;
 import view.ProductView;
 import dao.Dao;
 import dao.DaoImplFile;
+import dao.DaoImplJDBC;
 import dao.DaoImplJaxb;
 import dao.xml.SaxReader;
 import dao.DaoImplXml;
@@ -56,7 +57,7 @@ public class Shop {
     //    sales = new Sale[10];
         sales = new ArrayList<Sale>();
         this.inventory = new ArrayList<Product>();
-        this.dao = new DaoImplJaxb();
+        this.dao = new DaoImplJDBC();
 
          
     }
@@ -111,7 +112,7 @@ public class Shop {
                     break;
 
                 case 3:
-                    shop.addStock();  // Add stock for a specific product
+//                    shop.addStock(null);  // Add stock for a specific product
                     break;
 
                 case 4:
@@ -132,7 +133,7 @@ public class Shop {
                     
                 case 8:
                 	
-                	shop.deleteProduct(); //Delete product of inventory
+//                	shop.deleteProduct(); //Delete product of inventory
                 	break;
                 
                 case 9:
@@ -268,23 +269,22 @@ public class Shop {
     /**
      * Add stock for a specific product.
      */
-    public void addStock() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Select a product name: ");
-        String name = scanner.next();
-        Product product = findProduct(name);
+    public void addStock(Product product, int stock) {
+    	
+    	
+    	//Buscar nombre producto
 
         if (product != null) {
-            // Ask for the stock to be added
+            //Ask for the stock to be added
             System.out.print("Enter the quantity to add: ");
-            int stock = scanner.nextInt();
+          
             
             // Update the stock of the product
-            int updatedStock = product.getStock() + stock;
-            product.setStock(updatedStock);
-            System.out.println("The stock of the product " + name + " has been updated to " + product.getStock());
+            product.setStock(stock);
+            dao.updateProduct(product);
+            //System.out.println("The stock of the product " + name + " has been updated to " + product.getStock());
         } else {
-            System.out.println("Product with name " + name + " not found.");
+            //System.out.println("Product with name " + name + " not found.");
         }
     }
 
@@ -483,27 +483,28 @@ public class Shop {
  
     
     
-    private void deleteProduct() {
-        Scanner scanner = new Scanner (System.in);
-        System.out.println("Productos para borrar: ");
-        String name = scanner.next();
+    public void deleteProduct(Product product, int productId) {
+//        Scanner scanner = new Scanner (System.in);
+//        System.out.println("Productos para borrar: ");
+//        String name = scanner.next();
         
         // Display the list of available products for reference
         System.out.println("Lista de productos disponibles:");
-        for (Product product : inventory) {
-            if (product != null) { 
-                System.out.println(product.getName());
+        for (Product product1 : inventory) {
+            if (product1 != null) { 
+                System.out.println(product1.getName());
             }
         }
 
         // Find the product in the inventory
-        Product product = findProduct(name);
+    // Product product = findProduct(name);
 
         // Check if the product exists and is available
         if (product != null && product.isAvailable()) {
             // Set its availability to false, effectively removing it from the inventory
         	boolean productAvaible = true;
         	inventory.remove(product);
+        	dao.deleteProduct(productId);
         	 // If no more stock, set as not available to sale
             if (product.getStock() == 0) {
                 product.setAvailable(false);
@@ -539,11 +540,13 @@ public class Shop {
             System.out.println("Cannot add more products. Maximum capacity reached.");
             return;
         }
+         
+        dao.addProduct(product);
 
         inventory.add(product);
         
         
-    }
+    }   
 
     /**
      * Check if the inventory is full.

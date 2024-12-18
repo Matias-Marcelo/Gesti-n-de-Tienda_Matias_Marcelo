@@ -35,7 +35,7 @@ public class Product {
     
     public Product() {
     	super();
-    	this.id = ++totalProducts;
+    	//this.id = ++totalProducts;
     }
 
 

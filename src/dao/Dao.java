@@ -24,6 +24,12 @@ public interface Dao {
     //Method to return a boolean if the process is correct or not.
     public boolean writeInventory(ArrayList<Product> inventory);
     
+    public void addProduct(Product product);
+    
+    public void updateProduct(Product product);
+    
+    public void deleteProduct(int productId);
+    
     
     
 
