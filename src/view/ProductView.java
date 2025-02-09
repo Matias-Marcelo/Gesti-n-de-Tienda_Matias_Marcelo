@@ -141,7 +141,7 @@ public class ProductView extends JDialog implements ActionListener {
 						// TODO Auto-generated method stub
 					    if (e.getActionCommand().equals("OK")) {
 					        if (opcion == 2) { // Option to add a producto
-					        	dao = new DaoImplJDBC();
+					        	
 					        	
 
 					            String productName = textField.getText();
@@ -155,6 +155,7 @@ public class ProductView extends JDialog implements ActionListener {
 					            if (productFind == null) {
 
 						            Product product = new Product(productName, amount, true, stock, new Amount(amount.getValue() * 2));
+						            product.setPrice(price);
 						            //dao.addProduct(product);
 						            shop.addProduct(product);			
 						            
