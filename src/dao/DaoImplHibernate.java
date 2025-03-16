@@ -78,7 +78,6 @@ public class DaoImplHibernate implements Dao {
 			tx.rollback();
 			throw new RuntimeException(e);
 		}
-
 		disconnect();
 		return inventory;
 	}

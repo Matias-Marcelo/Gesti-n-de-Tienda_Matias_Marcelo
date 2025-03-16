@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import dao.Dao;
 import dao.DaoImplJDBC;
+import dao.DaoImplMongoDB;
 import main.Logable;
 
 //Create class employee on package model, extended of abstract class Person, also implemented interface Logable
@@ -32,7 +33,8 @@ public class Employee extends Person implements Logable {
 	@Override
 	public boolean login(int user, String password) throws SQLException {
 		// Implement method login
-		dao = new DaoImplJDBC();
+		dao = new DaoImplMongoDB();
+		dao.connect();
 		Employee employee = null;
 		boolean success = false;
 
@@ -42,7 +44,7 @@ public class Employee extends Person implements Logable {
 		// Retrieve employee from the database
 
 		employee = dao.getEmployee(user, password);
-		if (dao.getEmployee(user, password) != null) {
+	    if (employee != null && employee.getEmployeeId() == user && employee.getPassword().equals(password)) {
 
 			return true;
 
@@ -52,7 +54,7 @@ public class Employee extends Person implements Logable {
 		System.out.println("Desconectando....");
 		dao.disconnect();
 
-		return success;
+		return false;
 
 		// if(user == 123 && password.equalsIgnoreCase("test")) {
 

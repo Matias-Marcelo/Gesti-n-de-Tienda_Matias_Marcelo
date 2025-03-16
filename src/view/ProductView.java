@@ -177,8 +177,8 @@ public class ProductView extends JDialog implements ActionListener {
 					           
 					            if (product != null) {
 					                // Update the stock of the product
-					                //int updatedStock = product.getStock() + stock;
-					                //product.setStock(updatedStock);
+					                int updatedStock = product.getStock() + stock;
+					          
 					            	 shop.addStock(product, stock);
 						            JOptionPane.showMessageDialog(null,"Se ha actualizado correctamente","Succes",JOptionPane.INFORMATION_MESSAGE);
 

@@ -11,6 +11,7 @@ import dao.DaoImplFile;
 import dao.DaoImplHibernate;
 import dao.DaoImplJDBC;
 import dao.DaoImplJaxb;
+import dao.DaoImplMongoDB;
 import dao.xml.SaxReader;
 import dao.DaoImplXml;
 
@@ -56,7 +57,7 @@ public class Shop {
 		// sales = new Sale[10];
 		sales = new ArrayList<Sale>();
 		this.inventory = new ArrayList<Product>();
-		this.dao = new DaoImplHibernate();
+		this.dao = new DaoImplMongoDB();
 
 	}
 
@@ -225,9 +226,9 @@ public class Shop {
 	}
 
 	public boolean writeInventory() {
-
-		return dao.writeInventory(this.inventory);
-
+		
+		
+		  return dao.writeInventory(dao.getInventory());
 	};
 
 	/**
